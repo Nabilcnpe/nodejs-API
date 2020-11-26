@@ -1,0 +1,25 @@
+{
+  "name": "NODE_APP_BLACK",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.15",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1",
+    "supertest": "^6.0.1"
+  }
+}
