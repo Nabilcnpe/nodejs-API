@@ -4,11 +4,12 @@ const getParam = async (req, res, next, id) => {
 
     try {
         const category = await Category.findById(id);
-        if (!category) next(new Error('No category with that id'));
+        
+        if (!category) res.status(404).send('No category with that id');
         req.category = category;
         next()
     } catch (error) {
-        res.send({ message: error });
+        res.status(404).send({ message: error });
     }
 };
 
@@ -32,6 +33,9 @@ const createCategory = async (req, res) => {
     });
     
     try {
+        categoryExists = await Category.findOne({ name: req.body.name });
+        if (categoryExists) return res.status(500).send('A category with the same name already exists !')
+
         const newCategory = await category.save();
         res.send(newCategory);
     } catch (error) {

@@ -10,7 +10,7 @@ var config = {
     }
 };
 
-process.env.NODE_ENV = process.env.NODE_ENV || config.dev;
+process.env.NODE_ENV = process.env.NODE_ENV || config.test;
 
 config.env = process.env.NODE_ENV;
 
