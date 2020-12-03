@@ -40,11 +40,37 @@ describe('[CATEGORIES]', () => {
 
         try {
             const _id = createdCategory.body._id;
-            const res = await request(app).get(`/api/categories/${_id}`);
+            const res = await request(app)
+                                .get(`/api/categories/${_id}`);
             
             chai(res.body).to.be.an('object');
             chai(res.body._id).to.be.equal(_id);
             chai(res.body).to.have.property('name');
+        } catch (error) {
+            throw error;
+        }
+    });
+
+    it('Should update a category', async () => {
+        const update = { "name": "Updated tested category"};
+        const _id = createdCategory.body._id;
+
+        try {
+            const res = await request(app)
+                                .put(`/api/categories/${_id}`)
+                                .send(update)
+                                .set("auth-token", config.token);
+
+            chai(res.body.n).to.be.equal(1);
+            chai(res.body.nModified).to.be.equal(1);
+            chai(res.body.ok).to.be.equal(1);
+            chai(res.body).to.have.property("nModified");
+
+            //VERIFY THAT CATEGORY WAS UPDATED
+            const isUpdated = await request(app).get(`/api/categories/${_id}`);
+
+            chai(isUpdated.status).to.eql(200);
+            chai(isUpdated.body.name).to.be.equal(update.name);
         } catch (error) {
             throw error;
         }
@@ -65,7 +91,7 @@ describe('[CATEGORIES]', () => {
             chai(isDeleted.status).to.eql(404);
             
         } catch (error) {
-            if (error) throw error;
+            throw error;
         }
     });
 
@@ -83,7 +109,7 @@ describe('[CATEGORIES]', () => {
             chai(res.body.name).to.be.equal(category.name);
             chai(res.body).to.have.property('name');
         } catch (error) {
-            if (error) throw error;
+            throw error;
         }
     });
 
